@@ -1,12 +1,9 @@
 #include <iostream>
 #include <string>
 
-std::string main()
-{
-    //Input Strings to merge
-    std::string str1 = "bom";
-    std::string str2 = "cu";
 
+std::string joinStrings(std::string str1, std::string str2)
+{
     //New string with joined result and iterator creation
     std::string joined = "";
     int i = 0;
@@ -27,6 +24,20 @@ std::string main()
     if(i < str2.length())
         joined += str2.substr(i, str2.length());        
 
-    std::cout << joined << std::endl;
     return joined;
+}
+
+int main()
+{
+    //Input Strings to merge
+    std::string str1 = "";
+    std::string str2 = "";
+
+    //The func can also be called by inputing the 2 strings
+    std::cout << "Tell me 2 words to join (separate them with spaces)" << std::endl;
+    std::cin >> str1 >> str2;
+
+    
+    std::cout << joinStrings(str1, str2) << std::endl;
+    return 0;
 }
