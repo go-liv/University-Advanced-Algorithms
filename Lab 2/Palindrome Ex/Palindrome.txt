@@ -1,0 +1,10 @@
+PALINDROME(Array)
+    rev <- int[]
+
+    FOR i <- 0 to lenght(Array)-1
+        rev <- Array[(lenght(Array)-1)-i] 
+
+    IF rev == Array
+        RETURN 1
+    
+    RETURN 0
