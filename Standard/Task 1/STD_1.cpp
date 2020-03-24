@@ -1,3 +1,10 @@
+/*
+    SELECTION SORT
+    input: unsorted array
+    output: sorted array
+    Implements selection sort with integral swap
+*/
+
 #include <iostream>
 
 int *swap(int first, int sub, int array[])
@@ -44,21 +51,20 @@ int *selectionSort(int arg[], int length)
 
 int main()
 { 
-    int array[6] = {11, 22, 14, 67, 2, 9};
-    int length = (int)std::distance(std::begin(array), std::end(array));
+    int array[6] = {11, 22, 14, 67, 2, 9};                                                                                     // Our array to sort
+    int length = (int)std::distance(std::begin(array), std::end(array));                                                       // The lenght of the array is the distance between the first and last element
     /* 
         We need to get the size of the array in order to loop through it, it is a bit tricky to do it
     with c style arrays that's why I used std::distance, if a vector was used this would be able to be done
     in an easier way since vectors have a size property
     */
-    int *a = selectionSort(array, length);
+    int *a = selectionSort(array, length);                                                                                     // Call the function to sort onto a pointer to an integer
 
     /*
         In order to print the array after sorting we need a pointer that can point to each element.
         A way to surpass this would also be the use of a vector instead of a C style array.
     */
-
-    std::cout << "Sorted array: ";
+    std::cout << "Sorted array: ";                                                                                              
     for(int i = 0; i < length; i++)
     {
         if(i == length - 1)                                                                                                   // Checking where the full stop will be

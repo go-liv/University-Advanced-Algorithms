@@ -1,18 +1,15 @@
-""" Basic BST code for inserting (i.e. building) and printing a tree
-
-    Your ***second standard viva task*** (of 5) will be to implement a find method into
-    the class BinaryTree from pseudocode. See the lab task sheet for Week 4. 
-
-    Your ***first advanced viva task*** (of 3) will be to implement a remove (delete) method
-    into the class Binary Tree from partial pseudocode. See the lab task sheet for Week 4.
-
-    Since the given code is in python it is strongly suggested you stay with python; but
-    if you want to reimplement as C++ this is also OK (see the lab sheet guidance). 
+""" 
+    Basic BST code for inserting (i.e. building) and printing a tree
+    input: To initiallize the tree no input needed, to insert nodes need node value (int), to display needs a starting node (root usually),
+to find needs a target (value of the node)
+    output: Display outputs the printed tree, insert has no output, and find outputs a Boolean as in whether it has found or not
 """
 
 import math
 
-""" Node class
+""" 
+Node class
+    Initialization of the nodes, each node has a data and two other nodes, right and left (might be None if inexistent).
 """
 
 class Node:
@@ -21,7 +18,15 @@ class Node:
         self.left = None
         self.right = None
 
-""" BST class with insert and display methods. display pretty prints the tree
+""" 
+BST class with insert and display methods. 
+    Display pretty prints the tree, adds branches between the nodes by going between them and checking if there are neighbour nodes, where they are,
+so it can print the connections on the right positions.
+    Insert allows the insertion of a new node, if the root of the tree is None then the new node will be inserted in the root, else we need to find where to insert it.
+The function will then call another function that checks if the data in the node is less than the data of the current node (the last one to be inserted/used), if the data
+is less than the current node's then we check if the current node already as a left neighbour, if it does we recursivelly run the function again so that we can find the correct place,
+if there is no neighbour the node is inserted in there. Same goes for the case of the data of inserting node to be greater than the current node's we just use the right side now
+instead of the left. If the value is equal to the current node then it means the value is already present in the tree.
 """
 
 class BinaryTree:
@@ -48,62 +53,59 @@ class BinaryTree:
         else:
             print("Value already present in tree")
 
-    # - - - Iterative search - - - #
-    ## This function allows for a target to be searched on the tree iteratively                                                                   #
-    # It works by starting with the root node and going from that node to the upper one                                                           #
-    # Therefore it checks if the value encontered on the current node is less or greater than the target to search                                #
-    # If it is lower then the target should be more to the right of the node, if it's greater then it should be to the left                       #
-    # The code will continue to go to right or left of the nodes until there are no more nodes in the tree or until it finds the required target ##
+    '''
+    - - - Iterative search - - - 
+        This function allows for a target to be searched on the tree iteratively                                                                   
+    It works by starting with the root node and going from that node to the upper one                                                           
+    Therefore it checks if the value encontered on the current node is less or greater than the target to search                                
+    If it is lower then the target should be more to the right of the node, if it's greater then it should be to the left                       
+    The code will continue to go to right or left of the nodes until there are no more nodes in the tree or until it finds the required target 
+    '''
     def find_i(self, target):
-        #if there is no tree it wont run the code
-        if self.root != None:
-            cur_node = self.root
-            while cur_node != None:
-                if cur_node.data == target:
+        if self.root != None:                                                                   # if there is a tree run the code
+            cur_node = self.root                                                                # set current node as the root node                                                      
+            while cur_node != None:                                                             # loop while there is a current node
+                if cur_node.data == target:                                                     # if the node data is equal to what we are searching (target) return True
                     print("Iterative: True")
                     return True
-                #if target greater then run the search using the right node
-                elif cur_node.data > target:
+                elif cur_node.data > target:                                                    # if target greater then current node data run the search using the left node
                     cur_node = cur_node.left
-                #if target less then run the search using the left node
-                else:
+                else:                                                                           # if target less then run the search using the left node
                     cur_node = cur_node.right
             print("Iterative: False")
             return False
-        else:
+        else:                                                                                   # if there is no initial tree then don't run the code
             print("Iterative: No tree created")
             return None
-    # - - - end of iterative - - - #
 
 
-    # - - - Recursive search - - - #
-    ## This function allows for a target to be searched on the tree recursively                                                                        #
-    # It works by starting with the root node and going from that node to the upper one                                                                #
-    # Therefore it checks if the value encontered on the current node is less or greater than the target to search                                     #
-    # If it is lower then the function runs again but it uses the right node as the node to search from, if it's greater then it uses the left one     #
-    # The code will continue to go to right or left of the nodes until there are no more nodes in the tree or until it finds the required target      ##
+    ''' 
+    - - - Recursive search - - - 
+        This function allows for a target to be searched on the tree recursively                                                                        
+    It works by starting with the root node and going from that node to the upper one                                                                
+    Therefore it checks if the value encontered on the current node is less or greater than the target to search                                     
+    If it is lower then the function runs again but it uses the right node as the node to search from, if it's greater then it uses the left one     
+    The code will continue to go to right or left of the nodes until there are no more nodes in the tree or until it finds the required target      
+    '''
     def find_r(self, target):
-        #if there is no tree it wont run the code
-        if self.root != None:
-            if self._find_r(target, self.root):
+        if self.root != None:                                                                  # if there is a tree it will run the code
+            if self._find_r(target, self.root):                                                # call the _find_r function, if it returns True we can return True 
                 print("Recursive: True")
                 return True
-            print("Recursive: False")
+            print("Recursive: False")                                                          # if the _find_r func returns false find_r will return false
             return False
-        else:
+        else:                                                                                  # without a tree the code will not run 
             print("Recursive: No tree created")
             return None
     
     def _find_r(self, target, cur_node):
-        #if target greater then run the search using the right node
-        if target > cur_node.data and cur_node.right:
-            return self._find_r(target, cur_node.right)
-        #if target less then run the search using the left node
-        elif target < cur_node.data and cur_node.left:
-            return self._find_r(target, cur_node.left)
-        if target == cur_node.data:
-            return True
-    # - - - end of recursive - - - #
+        if target > cur_node.data and cur_node.right:                                          # if target greater then current node and we have a right node
+            return self._find_r(target, cur_node.right)                                        # run the search using the right node
+        elif target < cur_node.data and cur_node.left:                                         # if target less then current node and we have a left node
+            return self._find_r(target, cur_node.left)                                         # run the search using the left node
+        if target == cur_node.data:                                                            # if the current node's data is equal to the target
+            return True                                                                        # return True
+
 
     def display(self, cur_node):
         lines, _, _, _ = self._display(cur_node)
